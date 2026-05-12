@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from app.models.schemas import ChatRequest, ChatResponse
-from app.services.llm_service import classify_intent
-from app.tools.mock_tools import *
-from app.services.memory_service import ConversationMemory
+from models.schemas import ChatRequest, ChatResponse
+from services.llm_service import classify_intent
+from tools.mock_tools import *
+from services.memory_service import ConversationMemory
 
 router = APIRouter()
 memory = ConversationMemory()

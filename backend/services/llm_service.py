@@ -1,6 +1,6 @@
 import httpx
 import json
-from app.utils.prompt_templates import INTENT_PROMPT
+from utils.prompt_templates import INTENT_PROMPT
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.chat import router
+from routes.chat import router
 
 app = FastAPI(title="AI Customer Support Assistant")
 
@@ -13,6 +13,9 @@ app.add_middleware(
 )
 
 app.include_router(router)
+@app.get("/")
+def home():
+    return {"message": "AI Customer Support Backend Running"}
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,4 +1,4 @@
-from app.models.schemas import Hotel, ResponseData
+from models.schemas import Hotel, ResponseData
 
 def tracking_tool(order_id: str = None):
     return {
