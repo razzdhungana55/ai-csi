@@ -15,6 +15,7 @@ async def classify_intent(message: str, history: list = None) -> dict:
 
     prompt = INTENT_PROMPT.format(history=history_str, message=message)
 
+
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(
@@ -36,9 +37,22 @@ async def classify_intent(message: str, history: list = None) -> dict:
                 return {"intent": "unknown", "confidence": 0.5}
 
             try:
-                return json.loads(content)
+                parsed = json.loads(content)
             except:
                 return {"intent": "unknown", "confidence": 0.5}
+
+            # Normalize + confidence gating
+            try:
+                intent = str(parsed.get("intent", "unknown"))
+                confidence = float(parsed.get("confidence", 0.0))
+            except:
+                return {"intent": "unknown", "confidence": 0.5}
+
+            # If the model is not confident, do not route to tools.
+            if confidence < 0.60:
+                return {"intent": "unknown", "confidence": confidence}
+
+            return {"intent": intent, "confidence": confidence}
 
     except Exception as e:
         print(f"[Ollama Error] {e}")
