@@ -1,11 +1,12 @@
 from fastapi import APIRouter
 from models.schemas import ChatRequest, ChatResponse
 from services.llm_service import classify_intent
-from tools.mock_tools import *
 from services.memory_service import ConversationMemory
+from tools.mock_tools import *
 
 router = APIRouter()
 memory = ConversationMemory()
+
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
